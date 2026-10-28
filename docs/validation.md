@@ -4,7 +4,19 @@
 | --- | --- | --- |
 | Windows, Python 3.13, JDK 21, SoapUI Open Source 5.10.0 | Real Java service / SoapUI baseline | 13 cases, 40 requests, 296 assertions passed |
 | Same lab, deliberate missing-debit flag | SOAP-002 only | Nonzero SoapUI result; expected 974.90, actual 1000.00 |
-| Ubuntu hosted runner | Same service and SoapUI jars | Pending published execution |
+| Ubuntu 24.04 hosted runner | Same Java service and SoapUI jars | 13 cases / 40 requests / 296 assertions passed; mutation detected |
+
+[Verified GitHub Actions run](https://github.com/baruth91/soapui-soap-qa-case-study/actions/runs/40773900067)
+executed commit `fd051d9`. Hosted baseline JUnit reports 13 tests, zero failures and
+zero errors. The separate mutation reports one test and one failure, with runner
+exit code 255 and the exact missing-debit mismatch. Its evidence-checking wrapper
+passed. Baseline JUnit test-case time totals 2.782 seconds; runner preparation and
+process startup are additional time.
+
+Downloaded hosted artifacts were independently inspected: both JUnit files contain
+zero JVM-properties blocks. The baseline execution summary records runner exit 0;
+the mutation summary names only SOAP-002 as failing. This is the intended red/green
+teaching comparison, not a hidden failure in the normal implementation.
 
 The baseline covers real state mutation, exact decimals, minimum/exact-balance
 boundaries, retry behavior, specific business faults and XSD rejections. GetAccount
