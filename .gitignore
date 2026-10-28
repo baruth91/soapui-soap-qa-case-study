@@ -1,0 +1,8 @@
+.tools/
+.work/
+reports/
+__pycache__/
+*.log
+*.xml.bak
+*.xml.backup
+.DS_Store

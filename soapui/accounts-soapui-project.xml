@@ -1,0 +1,2558 @@
+<?xml version='1.0' encoding='utf-8'?>
+<con:soapui-project xmlns:con="http://eviware.com/soapui/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Synthetic account transfers" soapui-version="5.10.0" activeEnvironment="Default">
+  <con:settings />
+  <con:interface name="AccountsSoapBinding" bindingName="{urn:qa:accounts:v1}AccountsSoapBinding" soapVersion="1_1" definition="../service/accounts.wsdl" xsi:type="con:WsdlInterface">
+    <con:settings />
+    <con:definitionCache type="TEXT" rootPart="../service/accounts.wsdl">
+      <con:part>
+        <con:url>../service/accounts.wsdl</con:url>
+        <con:content>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:a="urn:qa:accounts:v1" targetNamespace="urn:qa:accounts:v1" name="Accounts"&gt;
+&lt;wsdl:types&gt;&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:qa:accounts:v1" xmlns:a="urn:qa:accounts:v1" elementFormDefault="qualified"&gt;
+  &lt;xs:simpleType name="Money"&gt;&lt;xs:restriction base="xs:decimal"&gt;&lt;xs:fractionDigits value="2"/&gt;&lt;xs:minInclusive value="0.01"/&gt;&lt;xs:maxInclusive value="1000000.00"/&gt;&lt;/xs:restriction&gt;&lt;/xs:simpleType&gt;
+  &lt;xs:simpleType name="AccountId"&gt;&lt;xs:restriction base="xs:string"&gt;&lt;xs:pattern value="[A-Z][0-9]{3}"/&gt;&lt;/xs:restriction&gt;&lt;/xs:simpleType&gt;
+  &lt;xs:simpleType name="RequestId"&gt;&lt;xs:restriction base="xs:string"&gt;&lt;xs:pattern value="[a-zA-Z0-9-]{1,64}"/&gt;&lt;/xs:restriction&gt;&lt;/xs:simpleType&gt;
+  &lt;xs:element name="GetAccountRequest"&gt;&lt;xs:complexType&gt;&lt;xs:sequence&gt;&lt;xs:element name="accountId" type="a:AccountId"/&gt;&lt;/xs:sequence&gt;&lt;/xs:complexType&gt;&lt;/xs:element&gt;
+  &lt;xs:element name="GetAccountResponse"&gt;&lt;xs:complexType&gt;&lt;xs:sequence&gt;&lt;xs:element name="accountId" type="a:AccountId"/&gt;&lt;xs:element name="currency" type="xs:string"/&gt;&lt;xs:element name="balance" type="xs:decimal"/&gt;&lt;xs:element name="transferCount" type="xs:nonNegativeInteger"/&gt;&lt;/xs:sequence&gt;&lt;/xs:complexType&gt;&lt;/xs:element&gt;
+  &lt;xs:element name="TransferRequest"&gt;&lt;xs:complexType&gt;&lt;xs:sequence&gt;&lt;xs:element name="requestId" type="a:RequestId"/&gt;&lt;xs:element name="fromAccount" type="a:AccountId"/&gt;&lt;xs:element name="toAccount" type="a:AccountId"/&gt;&lt;xs:element name="amount" type="a:Money"/&gt;&lt;xs:element name="currency" type="xs:string"/&gt;&lt;/xs:sequence&gt;&lt;/xs:complexType&gt;&lt;/xs:element&gt;
+  &lt;xs:element name="TransferResponse"&gt;&lt;xs:complexType&gt;&lt;xs:sequence&gt;&lt;xs:element name="requestId" type="a:RequestId"/&gt;&lt;xs:element name="status" type="xs:string"/&gt;&lt;xs:element name="fromBalance" type="xs:decimal"/&gt;&lt;xs:element name="toBalance" type="xs:decimal"/&gt;&lt;/xs:sequence&gt;&lt;/xs:complexType&gt;&lt;/xs:element&gt;
+  &lt;xs:element name="BusinessFault"&gt;&lt;xs:complexType&gt;&lt;xs:sequence&gt;&lt;xs:element name="code" type="xs:string"/&gt;&lt;xs:element name="message" type="xs:string"/&gt;&lt;/xs:sequence&gt;&lt;/xs:complexType&gt;&lt;/xs:element&gt;
+&lt;/xs:schema&gt;&lt;/wsdl:types&gt;&lt;wsdl:message name="GetAccountRequest"&gt;&lt;wsdl:part name="parameters" element="a:GetAccountRequest"/&gt;&lt;/wsdl:message&gt;&lt;wsdl:message name="GetAccountResponse"&gt;&lt;wsdl:part name="parameters" element="a:GetAccountResponse"/&gt;&lt;/wsdl:message&gt;&lt;wsdl:message name="TransferRequest"&gt;&lt;wsdl:part name="parameters" element="a:TransferRequest"/&gt;&lt;/wsdl:message&gt;&lt;wsdl:message name="TransferResponse"&gt;&lt;wsdl:part name="parameters" element="a:TransferResponse"/&gt;&lt;/wsdl:message&gt;
+&lt;wsdl:message name="BusinessFault"&gt;&lt;wsdl:part name="fault" element="a:BusinessFault"/&gt;&lt;/wsdl:message&gt;
+&lt;wsdl:portType name="AccountsPort"&gt;&lt;wsdl:operation name="GetAccount"&gt;&lt;wsdl:input message="a:GetAccountRequest"/&gt;&lt;wsdl:output message="a:GetAccountResponse"/&gt;&lt;wsdl:fault name="BusinessFault" message="a:BusinessFault"/&gt;&lt;/wsdl:operation&gt;&lt;wsdl:operation name="Transfer"&gt;&lt;wsdl:input message="a:TransferRequest"/&gt;&lt;wsdl:output message="a:TransferResponse"/&gt;&lt;wsdl:fault name="BusinessFault" message="a:BusinessFault"/&gt;&lt;/wsdl:operation&gt;&lt;/wsdl:portType&gt;
+&lt;wsdl:binding name="AccountsSoapBinding" type="a:AccountsPort"&gt;&lt;soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;&lt;wsdl:operation name="GetAccount"&gt;&lt;soap:operation soapAction="urn:qa:accounts:v1/GetAccount"/&gt;&lt;wsdl:input&gt;&lt;soap:body use="literal"/&gt;&lt;/wsdl:input&gt;&lt;wsdl:output&gt;&lt;soap:body use="literal"/&gt;&lt;/wsdl:output&gt;&lt;wsdl:fault name="BusinessFault"&gt;&lt;soap:fault name="BusinessFault" use="literal"/&gt;&lt;/wsdl:fault&gt;&lt;/wsdl:operation&gt;&lt;wsdl:operation name="Transfer"&gt;&lt;soap:operation soapAction="urn:qa:accounts:v1/Transfer"/&gt;&lt;wsdl:input&gt;&lt;soap:body use="literal"/&gt;&lt;/wsdl:input&gt;&lt;wsdl:output&gt;&lt;soap:body use="literal"/&gt;&lt;/wsdl:output&gt;&lt;wsdl:fault name="BusinessFault"&gt;&lt;soap:fault name="BusinessFault" use="literal"/&gt;&lt;/wsdl:fault&gt;&lt;/wsdl:operation&gt;&lt;/wsdl:binding&gt;
+&lt;wsdl:service name="Accounts"&gt;&lt;wsdl:port name="AccountsPort" binding="a:AccountsSoapBinding"&gt;&lt;soap:address location="http://127.0.0.1:18081/accounts"/&gt;&lt;/wsdl:port&gt;&lt;/wsdl:service&gt;
+&lt;/wsdl:definitions&gt;</con:content>
+        <con:type>http://schemas.xmlsoap.org/wsdl/</con:type>
+      </con:part>
+    </con:definitionCache>
+    <con:endpoints>
+      <con:endpoint>http://127.0.0.1:18081/accounts</con:endpoint>
+    </con:endpoints>
+    <con:operation name="GetAccount" bindingOperationName="GetAccount" action="urn:qa:accounts:v1/GetAccount" isOneWay="false" type="Request-Response" receivesAttachments="false" sendsAttachments="false" />
+    <con:operation name="Transfer" bindingOperationName="Transfer" action="urn:qa:accounts:v1/Transfer" isOneWay="false" type="Request-Response" receivesAttachments="false" sendsAttachments="false" />
+  </con:interface>
+  <con:testSuite name="Account transfer integrity">
+    <con:settings />
+    <con:testCase name="SOAP-001 owner account contract" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-002 exact decimal transfer and conservation" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-003 minimum cent transfer" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;0.01&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>999.99</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>250.01</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>999.99</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.01</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-004 full available balance transfer" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;1000.00&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>0.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>1250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>0.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-005 identical retry is not applied twice" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Initial transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Initial transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Retry same request">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Retry same request">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-006 conflicting retry preserves first transfer" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Initial transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Initial transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact requestId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:requestId/text()</path>
+                <content>transfer-001</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact status">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:status/text()</path>
+                <content>COMPLETED</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact fromBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:fromBalance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact toBalance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:TransferResponse/a:toBalance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Retry changed amount">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Retry changed amount">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;30.00&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>IDEMPOTENCY_CONFLICT</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>974.90</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>275.10</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>1</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-007 insufficient funds leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;1000.01&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>INSUFFICIENT_FUNDS</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-008 unknown destination leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;Z999&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>ACCOUNT_NOT_FOUND</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-009 same account leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;A100&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>SAME_ACCOUNT</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-010 unsupported currency leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;25.10&lt;/a:amount&gt;&lt;a:currency&gt;EUR&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>UNSUPPORTED_CURRENCY</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-011 zero amount violates XSD leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;0.00&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>INVALID_REQUEST</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-012 fractional cent violates XSD leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;1.001&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>INVALID_REQUEST</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:testCase name="SOAP-013 negative amount violates XSD leaves state unchanged" failOnError="true" failTestCaseOnErrors="true" keepSession="false">
+      <con:settings />
+      <con:testStep type="request" name="Transfer">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>Transfer</con:operation>
+          <con:request name="Transfer">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:TransferRequest&gt;&lt;a:requestId&gt;transfer-001&lt;/a:requestId&gt;&lt;a:fromAccount&gt;A100&lt;/a:fromAccount&gt;&lt;a:toAccount&gt;B200&lt;/a:toAccount&gt;&lt;a:amount&gt;-1.00&lt;/a:amount&gt;&lt;a:currency&gt;USD&lt;/a:currency&gt;&lt;/a:TransferRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>500</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="Not SOAP Fault Assertion" name="Expected SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact business fault code">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:BusinessFault/a:code/text()</path>
+                <content>INVALID_REQUEST</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read A100 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read A100 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;A100&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>A100</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>1000.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="request" name="Read B200 after operation">
+        <con:settings />
+        <con:config xsi:type="con:RequestStep">
+          <con:interface>AccountsSoapBinding</con:interface>
+          <con:operation>GetAccount</con:operation>
+          <con:request name="Read B200 after operation">
+            <con:settings />
+            <con:encoding>UTF-8</con:encoding>
+            <con:endpoint>${#Project#Endpoint}</con:endpoint>
+            <con:request>&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="urn:qa:accounts:v1"&gt;&lt;s:Body&gt;&lt;a:GetAccountRequest&gt;&lt;a:accountId&gt;B200&lt;/a:accountId&gt;&lt;/a:GetAccountRequest&gt;&lt;/s:Body&gt;&lt;/s:Envelope&gt;</con:request>
+            <con:assertion type="SOAP Response" name="SOAP 1.1 response">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Schema Compliance" name="Published WSDL response contract">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="Valid HTTP Status Codes" name="Expected HTTP status">
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="SOAP Fault Assertion" name="No SOAP fault">
+              <con:configuration />
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact accountId">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:accountId/text()</path>
+                <content>B200</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact currency">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:currency/text()</path>
+                <content>USD</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact balance">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:balance/text()</path>
+                <content>250.00</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="XPath Match" name="Exact transferCount">
+              <con:configuration>
+                <path>declare namespace a='urn:qa:accounts:v1';
+//a:GetAccountResponse/a:transferCount/text()</path>
+                <content>0</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials />
+          </con:request>
+        </con:config>
+      </con:testStep>
+      <con:properties />
+      <con:setupScript>def endpoint = context.expand('${#Project#Endpoint}')
+def url = new URL(endpoint)
+assert url.host == '127.0.0.1' &amp;&amp; url.protocol == 'http' : 'Owned loopback lab only'
+def connection = new URL("http://127.0.0.1:${url.port}/__test/reset").openConnection()
+connection.requestMethod = 'POST'
+connection.connectTimeout = 5000
+connection.readTimeout = 5000
+assert connection.responseCode == 204 : 'Fixture reset failed'
+connection.disconnect()</con:setupScript>
+    </con:testCase>
+    <con:properties />
+  </con:testSuite>
+  <con:properties>
+    <con:property>
+      <con:name>Endpoint</con:name>
+      <con:value>http://127.0.0.1:18081/accounts</con:value>
+    </con:property>
+  </con:properties>
+</con:soapui-project>
